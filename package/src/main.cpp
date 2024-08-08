@@ -1,5 +1,4 @@
-#include "links/OUTSIDE"
-#include "unmain.cpp"
+#include "INC/OUT/outside_header.h"
 
 struct revenue {
     std::string message;
