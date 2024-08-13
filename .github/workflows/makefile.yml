@@ -8,10 +8,8 @@ on:
     branches: [ '**' ]
 
 jobs:
-  build:
-
+  Build_in_package_dir:
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v4
     - run: cd package && make
