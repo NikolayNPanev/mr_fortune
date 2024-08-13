@@ -6,6 +6,13 @@ struct Revenue {
     double amount;
 };
 
+enum class ModifyAssetsType
+{
+    None = -1,
+    ADD, //add assets
+    SUB //subtract assets 
+};
+
 class User
 {
 public:
@@ -13,7 +20,18 @@ public:
     User(std::string newName, double newAssets);
     User(std::string newName, double newAssets, Revenue newRevenue);
     
+    std::string getName() const;
+    double getAssets() const;
+    Revenue operator[](unsigned int index);
+
+    void add_revenue(double value, std::string revenueMessage);
+    void sub_revenue(double value, std::string revenueMessage);
+
     void printUser(); //for testing
+
+private:
+    void modifyAssets(double value, ModifyAssetsType operand);
+    bool isValueValid(double value) const;
 
 private:
     std::string name;
@@ -43,4 +61,74 @@ void User::printUser()
     {
         std::cout << this->revenue_map[i].message << " " << this->revenue_map[i].amount << std::endl;
     }
+}
+
+std::string User::getName() const
+{
+    return this->name;
+}
+
+double User::getAssets() const
+{
+    return this->assets;
+}
+
+Revenue User::operator[](unsigned int index)
+{
+    if (index >= this->revenue_map.size()) {
+        throw "Invalid argument for revenue_map index\n";
+    }
+    return this->revenue_map[index];
+}
+
+void User::modifyAssets(double value, ModifyAssetsType operand)
+{
+    switch(operand) {
+        case ModifyAssetsType::ADD:
+            this->assets += value;
+            break;
+        case ModifyAssetsType::SUB:
+            this->assets -= value;
+            break;
+        default:
+            return;
+    }
+}
+
+void User::add_revenue(double value, std::string revenueMessage)
+{
+    if (this->isValueValid(value) == false) {
+        std::cout << "invalid argument for value in add_revenue" << std::endl;
+    }
+    else {
+        this->modifyAssets(value, ModifyAssetsType::ADD);
+        Revenue newRevenue;
+        newRevenue.amount = value;
+        newRevenue.message = revenueMessage;
+        this->revenue_map_index++;
+        this->revenue_map[this->revenue_map_index] = newRevenue;
+    }
+}
+
+void User::sub_revenue(double value, std::string revenueMessage)
+{
+    if (this->isValueValid(value) == false) {
+        std::cout << "invalid argument for value in sub_revenue" << std::endl;
+    }
+    else {
+        this->modifyAssets(value, ModifyAssetsType::SUB);
+        Revenue newRevenue;
+        newRevenue.amount = value;
+        newRevenue.message =revenueMessage;
+        this->revenue_map_index++;
+        this->revenue_map[this->revenue_map_index] = newRevenue;
+    }
+}
+
+bool User::isValueValid(double value) const
+{
+    if (value <= 0) {
+        return false;
+    }
+    return true;
 }
