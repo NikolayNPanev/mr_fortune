@@ -7,7 +7,7 @@ struct revenue {
 std::map<int,revenue> revenue_map;
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    std::cout << "Hello, Kolyo!" << std::endl;
     revenue_map[1] = {"JKinti", 100.0};
     revenue_map[2] = {"JKinti2-electric boogaloo", 200.0};
     std::cout<<revenue_map.size()<<std::endl; 
