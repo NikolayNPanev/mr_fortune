@@ -1,0 +1,21 @@
+name: Makefile CI
+
+on:
+  push:
+    branches:
+    - main
+    - develop
+    - CI/CD
+  pull_request:
+    branches: [ "develop", "main", "CI/CD" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: build
+    - run: make ../package/
