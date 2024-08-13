@@ -13,6 +13,13 @@ public:
     User(std::string newName, double newAssets);
     User(std::string newName, double newAssets, Revenue newRevenue);
     
+    std::string getName() const;
+    double getAssets() const;
+    std::map<int, Revenue> operator[](unsigned int index) const;
+
+    void modifyAssets(double value);
+
+
     void printUser(); //for testing
 
 private:
