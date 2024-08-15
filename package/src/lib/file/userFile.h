@@ -1,12 +1,13 @@
 #pragma once
 #include "csvfile.h"
+#include "INC/USR/user.h"
 
 class UsersCsvFile : public csvfile
 {
 public:
-    UsersCsvFile(const std::string newFileName)
-        : csvfile(newFileName, ","), fileName(newFileName) {}
+    UsersCsvFile(std::string newFileName);
     
+    void writeUser(const User& user);
 
 private:
     std::string fileName;
