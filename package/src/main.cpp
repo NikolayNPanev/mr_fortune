@@ -1,5 +1,5 @@
-#include "INC/OUT/outside_header.h"
-#include "INC/USR/user.h"
+#include "lib/outside/outside_header.h"
+#include "int/user/user.h"
 
 void testPrintUser()
 {

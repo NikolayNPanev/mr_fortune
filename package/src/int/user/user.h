@@ -1,5 +1,5 @@
 #pragma once
-#include "INC/OUT/outside_header.h"
+#include "../../lib/outside/outside_header.h"
 
 struct Revenue {
     std::string message;
