@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Clean and Build package
 
 on:
   pull_request:
@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: cd package && bazel build
+    - run: cd package && bazel clean --expunge && bazel build //... 
