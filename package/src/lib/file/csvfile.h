@@ -1,7 +1,5 @@
 #pragma once
-
-#include <iostream>
-#include <fstream>
+#include "INC/OUT/outside_header.h"
 
 class csvfile;
 
@@ -10,58 +8,38 @@ inline static csvfile& flush(csvfile& file);
 
 class csvfile
 {
-    std::ofstream fs_;
-    const std::string separator_;
 public:
-    csvfile(const std::string filename, const std::string separator = ";")
-        : fs_()
-        , separator_(separator)
-    {
-        fs_.exceptions(std::ios::failbit | std::ios::badbit);
-        fs_.open(filename);
-    }
+    csvfile(const std::string filename, const std::string separator = ";");
+    ~csvfile();
 
-    ~csvfile()
-    {
-        flush();
-        fs_.close();
-    }
+    void flush();
+    void endrow();
 
-    void flush()
-    {
-        fs_.flush();
-    }
-
-    void endrow()
-    {
-        fs_ << std::endl;
-    }
-
-    csvfile& operator << ( csvfile& (* val)(csvfile&))
-    {
-        return val(*this);
-    }
-
-    csvfile& operator << (const char * val)
-    {
-        fs_ << '"' << val << '"' << separator_;
-        return *this;
-    }
-
-    csvfile& operator << (const std::string & val)
-    {
-        fs_ << '"' << val << '"' << separator_;
-        return *this;
-    }
+    csvfile& operator << ( csvfile& (* val)(csvfile&));
+    csvfile& operator << (const char * val);
+    csvfile& operator << (const std::string & val);
 
     template<typename T>
-    csvfile& operator << (const T& val)
-    {
-        fs_ << val << separator_;
-        return *this;
-    }
+    csvfile& operator << (const T& val);
+
+    std::ofstream& getStream();
+
+private:
+    std::ofstream fs_;
+    const std::string separator_;
 };
 
+template<typename T>
+inline csvfile& csvfile::operator << (const T& val)
+{
+    fs_ << val << separator_;
+    return *this;
+}
+
+std::ofstream& csvfile::getStream()
+{
+    return this->fs_;
+}
 
 inline static csvfile& endrow(csvfile& file)
 {
