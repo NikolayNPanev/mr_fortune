@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: cd package && make
+    - run: cd package && bazel build
